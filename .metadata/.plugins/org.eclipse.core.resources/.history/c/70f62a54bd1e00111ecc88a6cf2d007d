@@ -1,0 +1,40 @@
+type Receta {
+    id: ID
+    titulo: String
+    descripcion: String
+    elaboracion: String
+    tiempoPreparacion: Int
+    tiempoCoccion: Int
+    comensales: Int
+    dificultad: String
+    categoria: String
+    ingredientes: [String]
+    urlImagen: String
+    autor: String
+    fechaCreacion: String
+    fechaActualizacion: String
+    fechaEliminacion: String
+}
+
+# Definimos las consultas (Queries) básicas para empezar
+type Query {
+    listarRecetas: [Receta]
+    buscarRecetaPorId(id: ID!): Receta
+}
+
+# Definimos las mutaciones (para crear recetas)
+type Mutation {
+    crearReceta(
+        titulo: String!,
+        descripcion: String,
+        elaboracion: String,
+        tiempoPreparacion: Int,
+        tiempoCoccion: Int,
+        comensales: Int,
+        dificultad: String,
+        categoria: String,
+        ingredientes: [String],
+        urlImagen: String,
+        autor: String
+    ): Receta
+}

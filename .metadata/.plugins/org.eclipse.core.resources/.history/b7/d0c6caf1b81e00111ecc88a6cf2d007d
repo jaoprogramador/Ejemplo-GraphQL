@@ -1,0 +1,50 @@
+package com.jao.spring.graphql.controller;
+
+import com.jao.spring.graphql.dto.RecetaDto;
+import com.jao.spring.graphql.entity.Receta;
+import com.jao.spring.graphql.exception.RecetaNotFound;
+import com.jao.spring.graphql.mapper.RecetaMapper;
+import com.jao.spring.graphql.repository.RecetaRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
+public class RecetaController {
+
+    private final RecetaRepository recetaRepository;
+    private final RecetaMapper recetaMapper;
+
+    @QueryMapping
+    public List<Receta> obtenerRecetasRecientes(@Argument int conteo, @Argument int compensacion) {
+        return recetaRepository.getRecentRecetas(conteo, compensacion);
+    }
+
+    @QueryMapping
+    public Receta obtenerRecetaPorId(@Argument Long id) {
+        return recetaRepository.getById(id)
+                .orElseThrow(() -> new RecetaNotFound("Receta no encontrada con ID: " + id));
+    }
+
+    @QueryMapping
+    public List<Receta> listarTodasLasRecetas() {
+        return recetaRepository.getAll();
+    }
+
+    @MutationMapping
+    public Receta eliminarRecetaPorId(@Argument Long id) {
+        return recetaRepository.delete(id)
+                .orElseThrow(() -> new RecetaNotFound("No se pudo eliminar: Receta no encontrada con ID: " + id));
+    }
+
+    @MutationMapping
+    public Receta guardarReceta(@Argument RecetaDto recetaDto) {
+        Receta receta = recetaMapper.apply(recetaDto);
+        return recetaRepository.save(receta);
+    }
+}

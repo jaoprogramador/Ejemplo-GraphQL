@@ -1,0 +1,56 @@
+# Definición de las consultas (Lectura)
+type Query {
+    # Lista todas las recetas almacenadas
+    listarTodasLasRecetas: [Receta]
+    
+    # Obtiene recetas con paginación
+    # Ejemplo: obtenerRecetasRecientes(conteo: 5, compensacion: 0)
+    obtenerRecetasRecientes(conteo: Int!, compensacion: Int!): [Receta]
+    
+    # Busca una receta específica por su ID único
+    obtenerRecetaPorId(id: ID!): Receta
+}
+
+# Definición de las mutaciones (Escritura/Modificación)
+type Mutation {
+    # Crea una nueva receta usando el objeto de entrada RecetaInput
+    guardarReceta(recetaDto: RecetaInput!): Receta
+    
+    # Realiza un borrado lógico de la receta por ID
+    eliminarRecetaPorId(id: ID!): Receta
+}
+
+# Objeto de entrada para las mutaciones (Equivalente a tu RecetaDto)
+input RecetaInput {
+    titulo: String!
+    descripcion: String
+    elaboracion: String
+    tiempoPreparacion: Int
+    tiempoCoccion: Int
+    comensales: Int
+    dificultad: String
+    categoria: String
+    ingredientes: [String]
+    urlImagen: String
+    autor: String
+}
+
+# Objeto de salida (Equivalente a tu entidad Receta)
+type Receta {
+    id: ID
+    titulo: String
+    descripcion: String
+    elaboracion: String
+    tiempoPreparacion: Int
+    tiempoCoccion: Int
+    comensales: Int
+    dificultad: String
+    categoria: String
+    ingredientes: [String]
+    urlImagen: String
+    autor: String
+    # Usamos String para las fechas por simplicidad en GraphQL
+    fechaCreacion: String
+    fechaActualizacion: String
+    fechaEliminacion: String
+}

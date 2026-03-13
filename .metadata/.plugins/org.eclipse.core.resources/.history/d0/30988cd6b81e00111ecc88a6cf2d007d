@@ -1,0 +1,39 @@
+package com.jao.spring.graphql.service;
+
+import com.jao.spring.graphql.dto.RecetaDto;
+import com.jao.spring.graphql.entity.Receta;
+import com.jao.spring.graphql.exception.RecetaNotFound;
+import com.jao.spring.graphql.mapper.RecetaMapper;
+import com.jao.spring.graphql.repository.RecetaRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class RecetaService {
+
+    private final RecetaRepository recetaRepository;
+    private final RecetaMapper recetaMapper;
+
+    public List<Receta> listarTodas() {
+        return recetaRepository.getAll();
+    }
+
+    public Receta buscarPorId(Long id) {
+        return recetaRepository.getById(id)
+                .orElseThrow(() -> new RecetaNotFound("Receta no encontrada: " + id));
+    }
+
+    public Receta crear(RecetaDto dto) {
+        // Aquí podrías añadir lógica: ej. validar que el autor no sea nulo
+        Receta receta = recetaMapper.apply(dto);
+        return recetaRepository.save(receta);
+    }
+
+    public Receta eliminar(Long id) {
+        return recetaRepository.delete(id)
+                .orElseThrow(() -> new RecetaNotFound("No se pudo eliminar el ID: " + id));
+    }
+}

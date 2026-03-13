@@ -1,0 +1,5 @@
+package com.jao.spring.graphql.entity;
+
+public class Receta {
+
+}
