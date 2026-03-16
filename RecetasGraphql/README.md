@@ -55,7 +55,7 @@ Controlador GraphQL que maneja las operaciones CRUD de recetas:
 
 #### Mutations disponibles:
 
-- `guardarReceta(postDto)`: Crea un nueva receta
+- `guardarReceta(recetaDto)`: Crea un nueva receta
 - `EliminarRecetaById(id)`: Elimina una receta por ID
 
 ### 2. **Entidad receta**
@@ -92,7 +92,7 @@ La entidad principal que representa una publicación con los siguientes campos:
 
 - `fechaEliminacion`: Fecha para borrado lógico (fechaEliminacion)
 
-### 3. **PostDto**
+### 3. **RecetaDto**
 
 DTO utilizado para la creación y actualización de recetas:
 
@@ -167,7 +167,7 @@ query {
 }
 ```
 
-### Mutation - Crear una receta post
+### Mutation - Crear una receta receta
 
 ``` graphql
 mutation {
@@ -232,7 +232,7 @@ spring-graphql/
 
 ## 🎯 Funcionalidades Implementadas
 
-- ✅ **API GraphQL** completa para gestión de posts
+- ✅ **API GraphQL** completa para gestión de recetas
 - ✅ **Operaciones CRUD** (Create, Read, Update, Delete)
 - ✅ **Paginación** en consultas
 - ✅ **Mapeo de datos** entre DTOs y entidades
